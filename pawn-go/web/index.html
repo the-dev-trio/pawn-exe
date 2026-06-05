@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pawn Go PoC</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section id="loginView" class="card login-card">
+        <p class="eyebrow">Offline Pawn Broker ERP</p>
+        <h1>Sign in</h1>
+        <p class="muted">Use the demo phone and password to open the dashboard.</p>
+
+        <form id="loginForm" novalidate>
+          <label for="phone">Phone number</label>
+          <input
+            id="phone"
+            name="phone"
+            type="tel"
+            inputmode="numeric"
+            maxlength="10"
+            placeholder="7845550512"
+            autocomplete="username"
+            required
+          />
+
+          <label for="password">Password</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            placeholder="7845550512"
+            autocomplete="current-password"
+            required
+          />
+
+          <button type="submit">Login</button>
+        </form>
+
+        <p id="loginMessage" class="message" aria-live="polite"></p>
+      </section>
+
+      <section id="dashboardView" class="dashboard hidden">
+        <header class="dashboard-header">
+          <div>
+            <p class="eyebrow">Local Desktop Mode</p>
+            <h1>Dashboard</h1>
+          </div>
+          <span class="status-pill">Backend Online</span>
+        </header>
+
+        <div class="stats-grid">
+          <article class="card stat-card">
+            <span>Today's Pledges</span>
+            <strong>12</strong>
+          </article>
+          <article class="card stat-card">
+            <span>Cash Issued</span>
+            <strong>Rs. 4.5L</strong>
+          </article>
+          <article class="card stat-card">
+            <span>Pending Tickets</span>
+            <strong>03</strong>
+          </article>
+        </div>
+
+        <section class="card action-card">
+          <div>
+            <h2>Thermal Print Test</h2>
+            <p class="muted">
+              This calls the Go backend, prints an ASCII receipt to the terminal, and writes
+              <code>dummy_receipt.txt</code>.
+            </p>
+          </div>
+          <button id="printButton" type="button">Print Pawn Ticket (Dummy)</button>
+          <p id="printMessage" class="message" aria-live="polite"></p>
+        </section>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

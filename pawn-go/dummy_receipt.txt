@@ -1,0 +1,17 @@
+================================
+        PAWN BROKER ERP
+        DUMMY PAWN TICKET
+================================
+Ticket No : POC-0001
+Date      : 05 Jun 2026 04:53 PM
+Customer  : Ramesh Kumar
+Phone     : 7845550512
+
+Item      : Gold Chain
+Weight    : 12.50 g
+Amount    : Rs. 45,000.00
+Interest  : 2.00% monthly
+
+Operator  : Demo User
+Status    : Printed from Go backend
+================================

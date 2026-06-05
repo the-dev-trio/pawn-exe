@@ -1,0 +1,77 @@
+Here is a precise, copy-pasteable PoC Master Prompt you can feed to your AI
+agent. It is designed to generate a working 2-page prototype (Login and
+Dashboard with dummy printing) using a lightweight Go backend and a vanilla
+HTML5/JS frontend inside a folder called pawn-go.
+
+📋 Copy and Paste this Prompt into your AI Agent:
+
+Role & Context: Act as a Senior Software Architect. We are building a
+high-performance, offline-first Pawn Broker ERP for Windows. To bypass Windows
+SmartScreen issues and handle thermal hardware printing cleanly, we are using a
+Go Backend + Browser UI architecture.
+
+Goal: Generate a complete, working Proof of Concept (PoC) inside a single
+directory named pawn-go.
+
+File Structure Required: All files must be placed inside the pawn-go folder:
+
+pawn-go/
+├── go.mod               # Go module configuration
+├── main.go              # Go server, browser launcher, and API endpoints
+└── web/                 # Frontend assets folder
+    ├── index.html       # Single-Page-App with Login & Dashboard views
+    ├── style.css        # Simple, modern UI styles
+    └── app.js           # AJAX/Fetch logic to communicate with the Go backend
+
+Requirements for main.go:
+
+1.  Set up a standard HTTP server listening on http://localhost:8080.
+2.  Serve static files from the ./web folder.
+3.  Implement a POST /api/login endpoint that:
+      - Expects JSON containing a 10-digit phone number and password.
+      - Validates against the mock credentials: Phone 7845550512 and Password
+        7845550512.
+      - Returns a JSON success or failure response.
+4.  Implement a POST /api/print endpoint that:
+      - Simulates raw thermal printing.
+      - When triggered, it should print a formatted ASCII receipt in the
+        terminal console AND write a file named dummy_receipt.txt inside the
+        pawn-go folder containing the mock transaction data to prove the backend
+        can write local files.
+5.  Implement a platform-specific function to automatically open the default web
+    browser to http://localhost:8080 immediately upon starting the Go
+    application.
+
+Requirements for the Frontend (web/):
+
+1.  Use vanilla HTML5, CSS, and modern ES6 JavaScript. No external heavy
+    frameworks (like React or Angular) to ensure millisecond-level load times.
+2.  index.html: Design a single-page structure containing two main sections
+    controlled by JS:
+      - Login View: A clean card requiring a 10-digit Indian phone number and a
+        password. Validate that the phone input contains exactly 10 digits
+        before sending.
+      - Dashboard View (Hidden by default): Displays a simple stats card and a
+        prominent, styled button that says "Print Pawn Ticket (Dummy)".
+3.  style.css: Provide simple, modern UI styling. Use dark-gray backgrounds and
+    blue accents appropriate for a professional desktop application.
+4.  app.js:
+      - Handle the login form submission. Perform a fetch() request to
+        /api/login. If successful, hide the login container and display the
+        dashboard container.
+      - Handle the "Print" button click. Perform a fetch() request to
+        /api/print. Show a success message (such as a temporary alert) when the
+        Go backend confirms the printing operation.
+
+Provide the exact file contents for all 5 files so I can run go run main.go
+immediately.
+
+⚙️ How you will run this after your agent generates the files:
+
+1.  Create a folder on your Mac or PC called pawn-go.
+2.  Paste the generated files into their respective paths.
+3.  Open your terminal, navigate to the folder, and run:
+    cd pawn-go
+    go run main.go
+4.  The Go server will start in milliseconds, and your default web browser will
+    pop open automatically to the login page.
