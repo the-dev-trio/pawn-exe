@@ -1,0 +1,110 @@
+<UserControl x:Class="PawnBrokerERP.Views.Pages.DashboardPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  Background="{StaticResource BackgroundBrush}">
+        <StackPanel Margin="32,28">
+
+            <!-- Header -->
+            <Grid Margin="0,0,0,28">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel>
+                    <TextBlock Text="Dashboard" Style="{StaticResource PageTitle}" Margin="0"/>
+                    <TextBlock Text="{Binding TodayDate}"
+                               Foreground="{StaticResource TextSubBrush}" FontSize="13"/>
+                </StackPanel>
+                <Button Grid.Column="1" Content="↻  Refresh" Style="{StaticResource OutlineButton}"
+                        Command="{Binding LoadCommand}" VerticalAlignment="Top"/>
+            </Grid>
+
+            <!-- Metric Cards Row 1 -->
+            <Grid Margin="0,0,0,16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="16"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="16"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="16"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Today's Loans -->
+                <Border Grid.Column="0" Style="{StaticResource MetricCard}">
+                    <StackPanel>
+                        <TextBlock Text="TODAY'S NEW LOANS" Style="{StaticResource FieldLabel}" Margin="0,0,0,12"/>
+                        <TextBlock Text="{Binding TodayNewLoans}" FontSize="40" FontWeight="Bold"
+                                   Foreground="{StaticResource AccentGoldBrush}"/>
+                        <TextBlock Text="pledges created today" Foreground="{StaticResource TextSubBrush}"
+                                   FontSize="12" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Active Loans -->
+                <Border Grid.Column="2" Style="{StaticResource MetricCard}">
+                    <StackPanel>
+                        <TextBlock Text="ACTIVE LOANS" Style="{StaticResource FieldLabel}" Margin="0,0,0,12"/>
+                        <TextBlock Text="{Binding ActiveLoans}" FontSize="40" FontWeight="Bold"
+                                   Foreground="#4A90D9"/>
+                        <TextBlock Text="currently outstanding" Foreground="{StaticResource TextSubBrush}"
+                                   FontSize="12" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Overdue -->
+                <Border Grid.Column="4" Style="{StaticResource MetricCard}">
+                    <StackPanel>
+                        <TextBlock Text="OVERDUE (&gt;30 DAYS)" Style="{StaticResource FieldLabel}" Margin="0,0,0,12"/>
+                        <TextBlock Text="{Binding OverdueLoans}" FontSize="40" FontWeight="Bold"
+                                   Foreground="{StaticResource ErrorBrush}"/>
+                        <TextBlock Text="require attention" Foreground="{StaticResource TextSubBrush}"
+                                   FontSize="12" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Pending Sync -->
+                <Border Grid.Column="6" Style="{StaticResource MetricCard}">
+                    <StackPanel>
+                        <TextBlock Text="PENDING CLOUD SYNC" Style="{StaticResource FieldLabel}" Margin="0,0,0,12"/>
+                        <TextBlock Text="{Binding PendingSyncCount}" FontSize="40" FontWeight="Bold"
+                                   Foreground="{StaticResource WarningBrush}"/>
+                        <TextBlock Text="records not yet synced" Foreground="{StaticResource TextSubBrush}"
+                                   FontSize="12" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Cash in Till Card -->
+            <Border Style="{StaticResource MetricCard}" Padding="24,20">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock Text="CASH COLLECTED TODAY" Style="{StaticResource FieldLabel}" Margin="0,0,0,8"/>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock Text="₹" FontSize="28" FontWeight="Bold"
+                                       Foreground="{StaticResource SuccessBrush}" VerticalAlignment="Bottom" Margin="0,0,4,2"/>
+                            <TextBlock Text="{Binding CashInTill, StringFormat=N2}" FontSize="40" FontWeight="Bold"
+                                       Foreground="{StaticResource SuccessBrush}"/>
+                        </StackPanel>
+                        <TextBlock Text="from redeemed pledges today"
+                                   Foreground="{StaticResource TextSubBrush}" FontSize="12" Margin="0,4,0,0"/>
+                    </StackPanel>
+                    <Border Grid.Column="1" Width="64" Height="64" CornerRadius="32"
+                            Background="{StaticResource SuccessBrush}" Opacity="0.15">
+                        <TextBlock Text="₹" FontSize="30" FontWeight="Bold"
+                                   Foreground="{StaticResource SuccessBrush}"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </Grid>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

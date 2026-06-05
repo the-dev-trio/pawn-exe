@@ -1,0 +1,156 @@
+<Window x:Class="PawnBrokerERP.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:pages="clr-namespace:PawnBrokerERP.Views.Pages"
+        xmlns:vm="clr-namespace:PawnBrokerERP.ViewModels"
+        Title="PawnBroker ERP"
+        Height="720" Width="1200"
+        MinHeight="600" MinWidth="900"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent">
+
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type vm:DashboardViewModel}">
+            <pages:DashboardPage/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:NewPledgeViewModel}">
+            <pages:NewPledgePage/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:RedeemPledgeViewModel}">
+            <pages:RedeemPledgePage/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ManagePledgesViewModel}">
+            <pages:ManagePledgesPage/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:PartPaymentViewModel}">
+            <pages:PartPaymentPage/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:CustomersViewModel}">
+            <pages:CustomersPage/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:SettingsViewModel}">
+            <pages:SettingsPage/>
+        </DataTemplate>
+    </Window.Resources>
+
+    <Border Background="{StaticResource BackgroundBrush}"
+            CornerRadius="12"
+            BorderBrush="{StaticResource BorderBrush2}"
+            BorderThickness="1">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="220"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Sidebar -->
+            <Border Grid.Column="0"
+                    Background="{StaticResource SidebarBrush}"
+                    CornerRadius="12,0,0,12">
+                <DockPanel>
+                    <!-- Logo -->
+                    <Border DockPanel.Dock="Top" Padding="20,24,20,16"
+                            BorderBrush="{StaticResource BorderBrush2}" BorderThickness="0,0,0,1">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                                <Border Width="32" Height="32" CornerRadius="8"
+                                        Background="{StaticResource AccentGoldBrush}" Margin="0,0,10,0">
+                                    <TextBlock Text="₹" FontSize="18" FontWeight="Bold"
+                                               Foreground="#0F0F1A"
+                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <TextBlock Text="PawnBroker" FontSize="16" FontWeight="Bold"
+                                           Foreground="{StaticResource TextWhiteBrush}"
+                                           VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <TextBlock Text="{Binding ShopName}" FontSize="11"
+                                       Foreground="{StaticResource AccentGoldBrush}"
+                                       Margin="42,0,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Drag Zone -->
+                    <Border DockPanel.Dock="Top" Height="28"
+                            MouseDown="TitleBar_MouseDown" Background="Transparent"/>
+
+                    <!-- Navigation -->
+                    <StackPanel DockPanel.Dock="Top" Margin="0,8,0,0">
+                        <Button Command="{Binding NavigateToCommand}" CommandParameter="Dashboard"
+                                Style="{StaticResource NavButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="📊" FontSize="16" Margin="0,0,12,0"/>
+                                <TextBlock Text="Dashboard" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Command="{Binding NavigateToCommand}" CommandParameter="NewPledge"
+                                Style="{StaticResource NavButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="➕" FontSize="16" Margin="0,0,12,0"/>
+                                <TextBlock Text="New Pledge" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Command="{Binding NavigateToCommand}" CommandParameter="RedeemPledge"
+                                Style="{StaticResource NavButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="🔓" FontSize="16" Margin="0,0,12,0"/>
+                                <TextBlock Text="Redeem Pledge" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Command="{Binding NavigateToCommand}" CommandParameter="ManagePledges"
+                                Style="{StaticResource NavButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="📋" FontSize="16" Margin="0,0,12,0"/>
+                                <TextBlock Text="Manage Pledges" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Command="{Binding NavigateToCommand}" CommandParameter="PartPayment"
+                                Style="{StaticResource NavButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="💳" FontSize="16" Margin="0,0,12,0"/>
+                                <TextBlock Text="Part Payment" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Command="{Binding NavigateToCommand}" CommandParameter="Customers"
+                                Style="{StaticResource NavButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="👥" FontSize="16" Margin="0,0,12,0"/>
+                                <TextBlock Text="Customers" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Command="{Binding NavigateToCommand}" CommandParameter="Settings"
+                                Style="{StaticResource NavButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="⚙" FontSize="16" Margin="0,0,12,0"/>
+                                <TextBlock Text="Settings" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+
+                    <!-- Bottom: Window Controls -->
+                    <StackPanel DockPanel.Dock="Bottom" Margin="16,0,16,16">
+                        <Separator Background="{StaticResource BorderBrush2}" Margin="0,0,0,12"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button Content="—" Width="28" Height="28" Margin="4,0" Click="MinimizeButton_Click"
+                                    Background="{StaticResource CardBrush}" Foreground="{StaticResource TextSubBrush}"
+                                    BorderThickness="0" Cursor="Hand" FontSize="14"/>
+                            <Button Content="✕" Width="28" Height="28" Click="CloseButton_Click"
+                                    Background="{StaticResource ErrorBrush}" Foreground="White"
+                                    BorderThickness="0" Cursor="Hand" FontSize="12"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <Grid/>
+                </DockPanel>
+            </Border>
+
+            <!-- Content Area -->
+            <Border Grid.Column="1" Background="{StaticResource BackgroundBrush}"
+                    CornerRadius="0,12,12,0">
+                <ContentControl Content="{Binding CurrentView}"
+                                Margin="0"/>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

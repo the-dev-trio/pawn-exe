@@ -1,0 +1,70 @@
+<UserControl x:Class="PawnBrokerERP.Views.Pages.SettingsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  Background="{StaticResource BackgroundBrush}">
+        <StackPanel Margin="32,28" MaxWidth="600">
+
+            <TextBlock Text="Settings" Style="{StaticResource PageTitle}"/>
+
+            <!-- Shop Settings -->
+            <Border Style="{StaticResource MetricCard}" Margin="0,0,0,16">
+                <StackPanel>
+                    <TextBlock Text="SHOP CONFIGURATION" FontSize="11" FontWeight="Bold"
+                               Foreground="{StaticResource AccentGoldBrush}" Margin="0,0,0,16"/>
+
+                    <TextBlock Text="SHOP NAME" Style="{StaticResource FieldLabel}"/>
+                    <Grid Margin="0,0,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="12"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Grid.Column="0" Style="{StaticResource ModernTextBox}"
+                                 Text="{Binding ShopName, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Button Grid.Column="2" Content="Save" Style="{StaticResource OutlineButton}"
+                                Command="{Binding SaveShopNameCommand}" Width="80"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- License Info -->
+            <Border Style="{StaticResource MetricCard}" Margin="0,0,0,16">
+                <StackPanel>
+                    <TextBlock Text="LICENSE &amp; SECURITY" FontSize="11" FontWeight="Bold"
+                               Foreground="{StaticResource AccentGoldBrush}" Margin="0,0,0,16"/>
+
+                    <Grid Margin="0,0,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="16"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="USB SERIAL (LOCKED)" Style="{StaticResource FieldLabel}"/>
+                            <TextBlock Text="{Binding UsbSerial}" Foreground="{StaticResource AccentGoldBrush}"
+                                       FontSize="12" FontFamily="Consolas"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="APP VERSION" Style="{StaticResource FieldLabel}"/>
+                            <TextBlock Text="{Binding AppVersion}" Foreground="{StaticResource TextWhiteBrush}" FontWeight="SemiBold"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <TextBlock Text="DATABASE PATH" Style="{StaticResource FieldLabel}"/>
+                    <TextBlock Text="{Binding DbPath}" Foreground="{StaticResource TextSubBrush}"
+                               FontSize="11" FontFamily="Consolas" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Messages -->
+            <TextBlock Text="{Binding ErrorMessage}" Foreground="{StaticResource ErrorBrush}"
+                       Visibility="{Binding ErrorMessage, Converter={StaticResource StringToVisibility}}"
+                       Margin="0,0,0,8"/>
+            <TextBlock Text="{Binding SuccessMessage}" Foreground="{StaticResource SuccessBrush}"
+                       Visibility="{Binding SuccessMessage, Converter={StaticResource StringToVisibility}}"/>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

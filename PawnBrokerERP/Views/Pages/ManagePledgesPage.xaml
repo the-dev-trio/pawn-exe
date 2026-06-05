@@ -1,0 +1,54 @@
+<UserControl x:Class="PawnBrokerERP.Views.Pages.ManagePledgesPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Grid Background="{StaticResource BackgroundBrush}" Margin="32,28">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Manage Pledges" Style="{StaticResource PageTitle}"/>
+
+        <!-- Filters -->
+        <Grid Grid.Row="1" Margin="0,0,0,16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="120"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0" Style="{StaticResource ModernTextBox}"
+                     Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}">
+                <TextBox.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="6"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+            <ComboBox Grid.Column="2" Style="{StaticResource ModernComboBox}"
+                      ItemsSource="{Binding StatusFilters}"
+                      SelectedItem="{Binding FilterStatus}"/>
+            <Button Grid.Column="4" Content="↻ Reload" Style="{StaticResource OutlineButton}"
+                    Command="{Binding LoadCommand}"/>
+        </Grid>
+
+        <!-- Data Grid -->
+        <DataGrid Grid.Row="2" Style="{StaticResource ModernDataGrid}"
+                  ItemsSource="{Binding Pledges}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Ticket #" Binding="{Binding TicketNumber}" Width="130"/>
+                <DataGridTextColumn Header="Customer" Binding="{Binding Customer.Name}" Width="160"/>
+                <DataGridTextColumn Header="Phone" Binding="{Binding Customer.Phone}" Width="110"/>
+                <DataGridTextColumn Header="Item" Binding="{Binding ItemDescription}" Width="*"/>
+                <DataGridTextColumn Header="Loan ₹" Binding="{Binding LoanAmount, StringFormat=N2}" Width="90"/>
+                <DataGridTextColumn Header="Total Due ₹" Binding="{Binding TotalDue, StringFormat=N2}" Width="100"/>
+                <DataGridTextColumn Header="Date" Binding="{Binding PledgeDate, StringFormat=dd-MMM-yy}" Width="90"/>
+                <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="80"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+</UserControl>

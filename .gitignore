@@ -1,0 +1,49 @@
+# Build outputs
+bin/
+obj/
+publish/
+
+# .NET
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.userprefs
+.vs/
+
+# NuGet
+packages/
+*.nupkg
+*.snupkg
+project.lock.json
+project.fragment.lock.json
+artifacts/
+**/packages/
+nuget.config
+
+# Database files (never commit the encrypted DB)
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+logs/
+
+# Publish artifacts
+publish/

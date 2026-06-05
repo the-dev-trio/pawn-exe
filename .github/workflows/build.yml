@@ -1,0 +1,59 @@
+name: Build PawnBroker ERP — Windows EXE
+
+on:
+  push:
+    branches: [ "**" ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    defaults:
+      run:
+        working-directory: PawnBrokerERP
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore Dependencies
+        run: dotnet restore
+
+      - name: Build Release
+        run: dotnet build -c Release --no-restore
+
+      - name: Publish Standalone Single-File EXE
+        run: >
+          dotnet publish -c Release
+          -r win-x64
+          --self-contained true
+          /p:PublishSingleFile=true
+          /p:IncludeNativeLibrariesForSelfExtract=true
+          /p:EnableCompressionInSingleFile=true
+          /p:DebugType=None
+          /p:DebugSymbols=false
+          -o ../publish/
+
+      - name: Upload EXE Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: PawnBrokerERP-Standalone-v${{ github.run_number }}
+          path: publish/PawnBrokerERP.exe
+          retention-days: 30
+
+      - name: Print Build Summary
+        run: |
+          echo "=========================================="
+          echo "  PawnBroker ERP Build Complete"
+          echo "  Run Number : ${{ github.run_number }}"
+          echo "  Commit     : ${{ github.sha }}"
+          echo "  Branch     : ${{ github.ref_name }}"
+          echo "  EXE        : publish/PawnBrokerERP.exe"
+          echo "=========================================="
