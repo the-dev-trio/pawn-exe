@@ -1,6 +1,5 @@
 using System.IO;
 using System.Management;
-using System.Reflection;
 
 namespace PawnBrokerERP.Services;
 
@@ -10,11 +9,7 @@ public class UsbHardwareService : IUsbHardwareService
     {
         try
         {
-            var exePath = Assembly.GetExecutingAssembly().Location;
-            if (string.IsNullOrEmpty(exePath))
-                exePath = AppDomain.CurrentDomain.BaseDirectory;
-
-            var driveLetter = Path.GetPathRoot(exePath)?.TrimEnd('\\');
+            var driveLetter = Path.GetPathRoot(AppContext.BaseDirectory)?.TrimEnd('\\');
             if (string.IsNullOrEmpty(driveLetter)) return null;
 
             // Walk: LogicalDisk -> Partition -> DiskDrive
@@ -51,11 +46,7 @@ public class UsbHardwareService : IUsbHardwareService
     {
         try
         {
-            var exePath = Assembly.GetExecutingAssembly().Location;
-            if (string.IsNullOrEmpty(exePath))
-                exePath = AppDomain.CurrentDomain.BaseDirectory;
-
-            var driveLetter = Path.GetPathRoot(exePath)?.TrimEnd('\\');
+            var driveLetter = Path.GetPathRoot(AppContext.BaseDirectory)?.TrimEnd('\\');
             if (string.IsNullOrEmpty(driveLetter)) return false;
 
             using var searcher = new ManagementObjectSearcher(

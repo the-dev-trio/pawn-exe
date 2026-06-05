@@ -1,0 +1,115 @@
+Here is the exact project structure and a highly detailed, copy-pasteable prompt
+you can use (in ChatGPT, Claude, or GitHub Copilot) to generate the exact
+skeleton, complete with the database protection and navigation you need.
+
+First, here is the Project Structure you should aim for:
+
+PawnBrokerERP/
+│
+├── PawnBrokerERP.csproj         # TargetFramework: net8.0-windows
+├── App.xaml                     # Startup configuration
+├── App.xaml.cs                  # DI container, DB Initialization, Bootstrapper
+│
+├── Data/                        # Database Layer
+│   └── AppDbContext.cs          # EF Core context (SQLCipher & WAL configured here)
+│
+├── Models/                      # Database Entities
+│   ├── User.cs                  # For Login
+│   ├── Customer.cs
+│   └── Pledge.cs
+│
+├── ViewModels/                  # MVVM Logic (using CommunityToolkit.Mvvm)
+│   ├── LoginViewModel.cs
+│   ├── MainViewModel.cs         # Handles side nav logic
+│   └── ... (ViewModels for each page)
+│
+├── Views/                       # UI Layer
+│   ├── LoginWindow.xaml         # First screen shown
+│   ├── MainWindow.xaml          # Holds the Side Nav and the content frame
+│   └── Pages/
+│       ├── DashboardPage.xaml
+│       ├── NewPledgePage.xaml
+│       ├── RedeemPledgePage.xaml
+│       ├── ManagePledgesPage.xaml
+│       ├── PartPaymentPage.xaml
+│       ├── CustomersPage.xaml
+│       └── SettingsPage.xaml
+
+📋 Copy and Paste this Prompt into your AI Coder:
+
+Role & Context: Act as an Expert C# WPF desktop developer. I am building a Pawn
+Broker ERP targeting .NET 8.0. The app will run entirely from a USB Thumbdrive
+(offline-first, portable, single-file publish). I need you to generate the
+foundational skeleton and boilerplate code using the MVVM pattern (via
+CommunityToolkit.Mvvm).
+
+Database Requirements:
+
+1.  Use Entity Framework Core with SQLite.
+2.  Implement SQLCipher for database encryption to protect the local .db file in
+    case the thumb drive is lost.
+3.  Enforce WAL Mode (Write-Ahead Logging) via EF Core configuration (PRAGMA
+    journal_mode=WAL;). This is critical to prevent database corruption if the
+    user suddenly yanks the thumbdrive out during an operation.
+
+UI & Navigation Requirements:
+
+1.  Login Flow: The app must start with LoginWindow.xaml. Upon successful
+    authentication, it should close the Login Window and open MainWindow.xaml.
+2.  Main Navigation: MainWindow.xaml must have a modern Side Navigation Menu on
+    the left, and a Frame on the right to load Pages.
+3.  The Side Navigation must include exactly these buttons/menu items:
+      - Dashboard
+      - New Pledge
+      - Redeem Pledge
+      - Manage Pledges
+      - Part Payment
+      - Customers
+      - Settings
+
+Tasks for you:
+
+1.  Give me the .csproj file with the necessary NuGet packages for EF Core
+    SQLite, SQLCipher, and the MVVM Community Toolkit.
+2.  Write the AppDbContext.cs showing exactly how to apply the SQLCipher
+    password and the WAL PRAGMA on initialization.
+3.  Write App.xaml.cs to show how to wire up the DB creation and launch the
+    LoginWindow.
+4.  Write the XAML and ViewModels for the LoginWindow (with a fake login command
+    that opens MainWindow) and the MainWindow (with the Side Nav and frame
+    routing).
+
+🛠️ Key NuGet Packages You Will Need
+
+When you start building this, these are the exact packages the AI should include
+in your project to make SQLCipher and WAL work:
+
+  - CommunityToolkit.Mvvm (For clean, boilerplate-free UI logic)
+  - Microsoft.EntityFrameworkCore.Sqlite (The base SQLite provider)
+  - SQLitePCLRaw.bundle_e_sqlcipher (This is the specific package that replaces
+    standard SQLite with the encrypted SQLCipher engine)
+
+💡 Pro-Tip for the WAL Mode on a Thumbdrive:
+
+When the AI generates the AppDbContext, make sure the OnConfiguring method looks
+something like this to ensure WAL mode and encryption are active:
+
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+{
+    // The password encrypts the database file
+    var connectionString = "Data Source=PawnERP.db;Password=YourSecurePassword123;";
+    
+    optionsBuilder.UseSqlite(connectionString);
+}
+
+// To enable WAL, you run this when the database is created/initialized
+public void InitializeDatabase()
+{
+    this.Database.Migrate(); // Or EnsureCreated()
+    
+    // This protects against sudden USB removal corruption
+    this.Database.ExecuteSqlRaw("PRAGMA journal_mode=WAL;");
+    
+    // Highly recommended for USB drives to reduce write frequency
+    this.Database.ExecuteSqlRaw("PRAGMA synchronous=NORMAL;"); 
+}

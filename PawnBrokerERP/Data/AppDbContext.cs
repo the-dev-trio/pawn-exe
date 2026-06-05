@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using PawnBrokerERP.Helpers;
 using PawnBrokerERP.Models;
 using System.IO;
-using System.Reflection;
 
 namespace PawnBrokerERP.Data;
 
@@ -20,9 +19,7 @@ public class AppDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        var exeDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
-                     ?? AppDomain.CurrentDomain.BaseDirectory;
-        var dbPath = Path.Combine(exeDir, "PawnERP.db");
+        var dbPath = Path.Combine(AppContext.BaseDirectory, "PawnERP.db");
 
         var connectionString = new SqliteConnectionStringBuilder
         {

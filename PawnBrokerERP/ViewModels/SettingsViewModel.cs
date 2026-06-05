@@ -24,10 +24,7 @@ public partial class SettingsViewModel : BaseViewModel
         var license = _db.AppLicense.FirstOrDefault();
         ShopName = license?.ShopName ?? "Not configured";
         UsbSerial = license?.UsbSerialNumber ?? "Not locked";
-        DbPath = System.IO.Path.Combine(
-            System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)
-                ?? AppDomain.CurrentDomain.BaseDirectory,
-            "PawnERP.db");
+        DbPath = System.IO.Path.Combine(AppContext.BaseDirectory, "PawnERP.db");
     }
 
     [RelayCommand]
